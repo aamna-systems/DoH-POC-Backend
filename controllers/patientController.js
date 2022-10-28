@@ -8,33 +8,19 @@ const { faker } = require('@faker-js/faker');
 
 function getLatLong(emirate) {
     if (emirate.toLowerCase() === 'abu dhabi') {
-
         return { lat: 24.466667, lng: 54.366669 };
-
     } else if (emirate.toLowerCase() === 'dubai') {
-
         return { lat: 25.2048, lng: 55.2708 };
-
     } else if (emirate.toLowerCase() === 'sharjah') {
-
         return { lat: 25.357119, lng: 55.391068 };
-
     } else if (emirate.toLowerCase() === 'ajman') {
-
         return { lat: 25.400073, lng: 55.481698 };
-
     } else if (emirate.toLowerCase() === 'umm al-quwain') {
-
         return { lat: 25.520482, lng: 55.713391 };
-
     } else if (emirate.toLowerCase() === 'fujairah') {
-
         return { lat: 25.11899, lng: 56.34956 };
-
     } else if (emirate.toLowerCase() === 'ras al khaimah') {
-
         return { lat: 25.983932, lng: 56.075012 };
-
     }
 }
 
