@@ -16,17 +16,18 @@ const performingFacility = ["CSKB UOS Hall COVID Vaccination", "CJMZ MUZAIRA", "
 const occupations = ["DRIVING INSTRUCTOR", "Administration", "Airline", "Beauty Salons (Men / Women)"]
 //ned to update building name of patiend address
 const patientAddressBuildingMapping = {
-    '1': { lat: 25.2828471, lng: 55.37083 },
-    '2': { lat: 25.1863, lng: 55.4034 },
-    '3': { lat: 25.0333053, lng: 55.2815025 },
-    '4': { lat: 25.1783421, lng: 55.3064431 },
+    "Hotel Tulip": { lat: 25.2554478, lng: 55.2984144 },
+    "Al Khoory Hotel Apartments": { lat: 25.1126745, lng: 55.1928349 },
+    "Saffron Hotel": { lat: 25.2613126, lng: 55.3256735 },
+    "Garden Homes Frond O": { lat: 25.10778577, lng: 55.12997274 },
+    "Arabian Ranches Villas": { lat: 25.0505503, lng: 55.2825792 }
 }
 
 //har coded data
-const patientAddressBuildings = ['1', '2', '3', '4']
-const flatsNumber = ['1', '2']
-const area = ['area1', 'area2']
-const streetNumbers = ['st1', 'st2']
+const patientAddressBuildings = ["Hotel Tulip", "Al Khoory Hotel Apartments", "Saffron Hotel", "Garden Homes Frond O", "Arabian Ranches Villas"]
+const flatsNumber = ["701", "505", "103", "A-15", "R-32"]
+const area = ["Al Mankhool", "Al Barsha", "Al Muraqqabat, Deira", "Palm Jumeirah", "Arabian Ranches"]
+const streetNumbers = ["3A Street", "1 Al Barsha 1 Street", "34c Street", "Al Safawi - Frond O Street", "Wadi Al Safa 6 Street"]
 
 
 
@@ -98,7 +99,6 @@ function patientEntry(requestBody) {
             emirate: "Dubai",
             region: getRandomValue(region),
             zone: getRandomValue(zones),
-            typeOfResidence: "someDataAsPerDataType",
             buildingName: "someDataAsPerDataType",
             flatNumber: "someDataAsPerDataType",
             area: getRandomValue(schoolArea),
@@ -114,7 +114,6 @@ function patientEntry(requestBody) {
             emirate: "Dubai",
             region: getRandomValue(region),
             zone: getRandomValue(zones),
-            typeOfResidence: getRandomValue(typePlaceResidence),
             buildingName: "someDataAsPerDataType",
             flatNumber: "someDataAsPerDataType",
             area: getRandomValue(occupationArea),
