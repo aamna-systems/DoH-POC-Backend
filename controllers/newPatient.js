@@ -20,39 +20,38 @@ const patientAddressBuildingMapping = {
     "Al Khoory Hotel Apartments": { lat: 25.1126745, lng: 55.1928349 },
     "Saffron Hotel": { lat: 25.2613126, lng: 55.3256735 },
     "Garden Homes Frond O": { lat: 25.10778577, lng: 55.12997274 },
-    "Arabian Ranches Villas": { lat: 25.0505503, lng: 55.2825792 }
 }
 
 //har coded data
-const patientAddressBuildings = ["Hotel Tulip", "Al Khoory Hotel Apartments", "Saffron Hotel", "Garden Homes Frond O", "Arabian Ranches Villas"]
-const flatsNumber = ["701", "505", "103", "A-15", "R-32"]
-const area = ["Al Mankhool", "Al Barsha", "Al Muraqqabat, Deira", "Palm Jumeirah", "Arabian Ranches"]
+const patientAddressBuildings = ["Hotel Tulip", "Al Khoory Hotel Apartments", "Saffron Hotel", "Garden Homes Frond O"]
+const flatsNumber = ["701", "505", "103", "A-15"]
+const area = ["Al Mankhool", "Al Barsha", "Al Muraqqabat, Deira", "Palm Jumeirah"]
 const streetNumbers = ["3A Street", "1 Al Barsha 1 Street", "34c Street", "Al Safawi - Frond O Street", "Wadi Al Safa 6 Street"]
 
 
 
 const schoolInsitute = ["Nursery", "School", "University"]
 const schoolsName = ["The Westminster School", "International Academic School", "Nord Anglia International School",
-    "Gems Metropole School", "North London Collegiate School"]
+    "Gems Metropole School"]
 const schoolCoordinates = {
     "The Westminster School": { lat: 25.2828471, lng: 55.37083 },
     "International Academic School": { lat: 25.1863, lng: 55.4034 },
     "Nord Anglia International School": { lat: 25.0618708, lng: 55.2266874 },
     "Gems Metropole School": { lat: 25.0333053, lng: 55.2815025 },
-    "North London Collegiate School": { lat: 25.1783421, lng: 55.3064431 }
 }
 const zones = ["zone 1", "zone 2", "zone 3", "zone 4", "zone 5", "zone 6", "zone 7"]
 const schoolArea = ["Al Qusais", "Al Warqa", "Al Barsha South", "DAMAC Hills"]
-const employersName = ["Etisalat", "Microsoft", "TechVista ltd", "TechManindra ltd", "ManPower ltd"]
-const placesOfWork = ["Al Kifaf building", "Microsoft Dubai office Building", "The Exchange Tower Building", "Latifa Tower Building"
-    , "InterContinental Dubai Marina, an IHG Hotel Building"]
-const occupationArea = ["Zabeel", "Dubai Knowledge Park", "Business Bay", "World Trade Centre", "Dubai Marina"]
+const schoolStreets = ["21 A Street", "12 C Street"
+    ,"Nord Anglia International School Access Road", "Damac Hills"]
+const employersName = ["Etisalat", "Microsoft", "TechVista ltd", "TechManindra ltd"]
+const placesOfWork = ["Al Kifaf building", "Microsoft Dubai office Building", "The Exchange Tower Building", "Latifa Tower Building"]
+const occupationArea = ["Zabeel", "Dubai Knowledge Park", "Business Bay", "World Trade Centre"]
+const occuapationStreet = ["Sheikh Zayed Road (south)", "Sheikh Zayed Road (south)", "Business Bay", "Sheikh Zayed Road (south)"]
 const placeOfWorkCoordinates = {
     "Al Kifaf building": { lat: 25.2311037, lng: 55.29137 },
     "Microsoft Dubai office Building": { lat: 25.0948373, lng: 55.1625756 },
     "The Exchange Tower Building": { lat: 25.0742823, lng: 55.1885387 },
-    "Latifa Tower Building": { lat: 25.2216793, lng: 55.2810159 },
-    "InterContinental Dubai Marina, an IHG Hotel Building": { lat: 25.0791028, lng: 55.1380668 }
+    "Latifa Tower Building": { lat: 25.2216793, lng: 55.2810159 }
 }
 const covidVaccineStatus = ['Yes', 'No']
 
@@ -61,14 +60,6 @@ function getRandomValue(array) {
 }
 
 
-
-// function setKeyValue(keyObject, operation = null, patientData) {
-//     console.log('keyob', keyObject, operation, patientData)
-//     for (let [key, value] of Object.entries(keyObject)) {
-//         let newValue = typeof value == "string" ? value : getRandomValue(value)
-//         operation ? patientData[operation].key = newValue : patientData[key] = newValue
-//     }
-// }
 function patientEntry(requestBody) {
 
     let patientData = {
@@ -93,16 +84,17 @@ function patientEntry(requestBody) {
         school: {
             instituteType: getRandomValue(schoolInsitute),
             schoolName: null,
-            classNumber: "someDataAsPerDataType",
-            classSection: "someDataAsPerDataType",
+            classNumber: faker.random.numeric(),
+            classSection: faker.random.alpha(),
             // Institute Address
             emirate: "Dubai",
             region: getRandomValue(region),
             zone: getRandomValue(zones),
+            //school building and flatnumber
             buildingName: "someDataAsPerDataType",
             flatNumber: "someDataAsPerDataType",
             area: getRandomValue(schoolArea),
-            streetNumber: "someDataAsPerDataType",
+            streetNumber: getRandomValue(schoolStreets),
             latitude: null,
             longitude: null
         },
@@ -117,7 +109,7 @@ function patientEntry(requestBody) {
             buildingName: "someDataAsPerDataType",
             flatNumber: "someDataAsPerDataType",
             area: getRandomValue(occupationArea),
-            streetNumber: "someDataAsPerDataType",
+            streetNumber: getRandomValue(occuapationStreet),
             latitude: null,
             longitude: null
         },
