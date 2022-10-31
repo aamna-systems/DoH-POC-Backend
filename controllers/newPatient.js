@@ -132,34 +132,54 @@ function patientEntry(requestBody) {
             referringFacility: getRandomValue(performingFacility),
         },
     }
-    
+
     if (requestBody?.patientDemographics) {
         for (let [key, value] of Object.entries(requestBody.patientDemographics)) {
-            let newValue = typeof value == "string" ? value : getRandomValue(value)
-            patientData[key]= newValue
+            if (value !== null) {
+                let newValue = typeof value == "string" ? value : getRandomValue(value)
+                patientData[key] = newValue
+            }
+
         }
     }
     if (requestBody?.vaccination) {
         for (let [key, value] of Object.entries(requestBody.vaccination)) {
-            let newValue = typeof value == "string" ? value : getRandomValue(value)
-            patientData.vaccination[key]= newValue
+            if (value != null) {
+                let newValue = typeof value == "string" ? value : getRandomValue(value)
+                patientData.vaccination[key] = newValue
+            }
+
         }
     }
     if (requestBody?.labTests) {
         for (let [key, value] of Object.entries(requestBody.labTests)) {
-            let newValue = typeof value == "string" ? value : getRandomValue(value)
-            patientData.labTests[key]= newValue
+            if (value != null) {
+                let newValue = typeof value == "string" ? value : getRandomValue(value)
+                patientData.labTests[key] = newValue
+            }
+
         }
     }
 
     if (requestBody?.patientAddress) {
         for (let [key, value] of Object.entries(requestBody.patientAddress)) {
-            let newValue = typeof value == "string" ? value : getRandomValue(value)
-            patientData.patientAddress[key] = newValue;
-            if (key == 'buildingName') {
-                patientData.patientAddress.latitude = patientAddressBuildingMapping[newValue].lat
-                patientData.patientAddress.longitude = patientAddressBuildingMapping[newValue].lng
+            if (value != null) {
+                let newValue = typeof value == "string" ? value : getRandomValue(value)
+                patientData.patientAddress[key] = newValue;
+                if (key == 'buildingName') {
+                    patientData.patientAddress.latitude = patientAddressBuildingMapping[newValue].lat
+                    patientData.patientAddress.longitude = patientAddressBuildingMapping[newValue].lng
+                }
+            } else {
+                if (key == 'buildingName') {
+                    let buildingName = getRandomValue(patientAddressBuildings)
+                    patientData.patientAddress.buildingName = buildingName;
+                    console.log(buildingName, patientAddressBuildingMapping[buildingName].lat)
+                    patientData.patientAddress.latitude = patientAddressBuildingMapping[buildingName].lat
+                    patientData.patientAddress.longitude = patientAddressBuildingMapping[buildingName].lng
+                }
             }
+
         }
     } else {
         let buildingName = getRandomValue(patientAddressBuildings)
@@ -171,12 +191,22 @@ function patientEntry(requestBody) {
 
     if (requestBody?.school) {
         for (let [key, value] of Object.entries(requestBody.school)) {
-            let newValue = typeof value == "string" ? value : getRandomValue(value)
-            patientData.school[key] = newValue;
-            if (key == 'schoolName') {
-                patientData.school.latitude = schoolCoordinates[newValue].lat
-                patientData.school.longitude = schoolCoordinates[newValue].lng
+            if (value != null) {
+                let newValue = typeof value == "string" ? value : getRandomValue(value)
+                patientData.school[key] = newValue;
+                if (key == 'schoolName') {
+                    patientData.school.latitude = schoolCoordinates[newValue].lat
+                    patientData.school.longitude = schoolCoordinates[newValue].lng
+                }
+            } else {
+                if (key == 'schoolName') {
+                    let schoolName = getRandomValue(schoolsName)
+                    patientData.school.schoolName = schoolName;
+                    patientData.school.latitude = schoolCoordinates[schoolName].lat
+                    patientData.school.longitude = schoolCoordinates[schoolName].lng
+                }
             }
+
         }
     } else {
         let schoolName = getRandomValue(schoolsName)
@@ -187,11 +217,18 @@ function patientEntry(requestBody) {
 
     if (requestBody?.occuapation) {
         for (let [key, value] of Object.entries(requestBody.occuapation)) {
-            let newValue = typeof value == "string" ? value : getRandomValue(value)
-            patientData.occuapation[key] = newValue;
-            if (key == 'placeOfWork') {
-                patientData.occuapation.latitude = placeOfWorkCoordinates[newValue].lat
-                patientData.occuapation.longitude = placeOfWorkCoordinates[newValue].lng
+            if (value != null) {
+                let newValue = typeof value == "string" ? value : getRandomValue(value)
+                patientData.occuapation[key] = newValue;
+                if (key == 'placeOfWork') {
+                    patientData.occuapation.latitude = placeOfWorkCoordinates[newValue].lat
+                    patientData.occuapation.longitude = placeOfWorkCoordinates[newValue].lng
+                }
+            } else {
+                let placeOfWork = getRandomValue(placesOfWork)
+                patientData.occuapation.placeOfWork = placeOfWork;
+                patientData.occuapation.latitude = placeOfWorkCoordinates[placeOfWork].lat
+                patientData.occuapation.longitude = placeOfWorkCoordinates[placeOfWork].lng
             }
         }
     } else {
@@ -240,7 +277,7 @@ const createPatients = (async (req, res) => {
 
 const getPatients = (async (req, res) => {
     try {
-        const patients = await Patient.find({}, { patientAddress: { latitude: 1, longitude: 1}, _id: 0 })
+        const patients = await Patient.find({}, { patientAddress: { latitude: 1, longitude: 1 }, _id: 0 })
         res.status(201).json(patients)
     } catch (err) {
         res.status(500).send({
