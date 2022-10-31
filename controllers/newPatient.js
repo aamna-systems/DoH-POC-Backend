@@ -277,7 +277,18 @@ const createPatients = (async (req, res) => {
 
 const getPatients = (async (req, res) => {
     try {
-        const patients = await Patient.find({}, { patientAddress: { latitude: 1, longitude: 1 }, _id: 0 })
+        const patients = await Patient.find({}, { patientAddress: { latitude: 1, longitude: 1, buildingName: 1 }, _id: 0 })
+        res.status(201).json(patients)
+    } catch (err) {
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while fetching.",
+        });
+    }
+})
+const getAllFieldsPatients = (async (req, res) => {
+    try {
+        const patients = await Patient.find({})
         res.status(201).json(patients)
     } catch (err) {
         res.status(500).send({
@@ -291,5 +302,6 @@ const getPatients = (async (req, res) => {
 
 module.exports = {
     createPatients,
-    getPatients
+    getPatients,
+    getAllFieldsPatients
 }
