@@ -20,7 +20,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-const patientRouter = require('./routes/patient')
+// const patientRouter = require('./routes/patient')
+// app.use('/patient', patientRouter)
+
+const patientRouter = require('./routes/newPatient')
 app.use('/patient', patientRouter)
 
 
