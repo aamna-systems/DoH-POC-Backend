@@ -61,15 +61,16 @@ function getRandomValue(array) {
 
 
 
-function setKeyValue(keyObject, operation = null) {
-    for (let [key, value] of Object.entries(keyObject)) {
-        let newValue = typeof value == "string" ? value : getRandomValue(value)
-        operation ? patientData.operation[key] = newValue : patientData[key] = newValue
-    }
-}
+// function setKeyValue(keyObject, operation = null, patientData) {
+//     console.log('keyob', keyObject, operation, patientData)
+//     for (let [key, value] of Object.entries(keyObject)) {
+//         let newValue = typeof value == "string" ? value : getRandomValue(value)
+//         operation ? patientData[operation].key = newValue : patientData[key] = newValue
+//     }
+// }
 function patientEntry(requestBody) {
 
-    const patientData = {
+    let patientData = {
         fullname: faker.name.fullName(),
         gender: getRandomValue(gender),
         ageGroup: ageMapping[Math.floor(Math.random() * (4 - 0 + 1) + 0)],
@@ -131,14 +132,24 @@ function patientEntry(requestBody) {
             referringFacility: getRandomValue(performingFacility),
         },
     }
+    
     if (requestBody?.patientDemographics) {
-        setKeyValue(requestBody.patientDemograhics)
+        for (let [key, value] of Object.entries(requestBody.patientDemographics)) {
+            let newValue = typeof value == "string" ? value : getRandomValue(value)
+            patientData[key]= newValue
+        }
     }
     if (requestBody?.vaccination) {
-        setKeyValue(requestBody.patientDemograhics, vaccination)
+        for (let [key, value] of Object.entries(requestBody.vaccination)) {
+            let newValue = typeof value == "string" ? value : getRandomValue(value)
+            patientData.vaccination[key]= newValue
+        }
     }
     if (requestBody?.labTests) {
-        setKeyValue(requestBody.labTests, labTests)
+        for (let [key, value] of Object.entries(requestBody.labTests)) {
+            let newValue = typeof value == "string" ? value : getRandomValue(value)
+            patientData.labTests[key]= newValue
+        }
     }
 
     if (requestBody?.patientAddress) {
@@ -229,7 +240,7 @@ const createPatients = (async (req, res) => {
 
 const getPatients = (async (req, res) => {
     try {
-        const patients = await Patient.find({}, { patientAddress: { latitude: 1, longitude: 1 }, _id: 0 })
+        const patients = await Patient.find({}, { patientAddress: { latitude: 1, longitude: 1}, _id: 0 })
         res.status(201).json(patients)
     } catch (err) {
         res.status(500).send({
