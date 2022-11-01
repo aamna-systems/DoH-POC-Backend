@@ -1,6 +1,6 @@
 const { faker } = require('@faker-js/faker');
-const region = ["ABU DHABI", "AL AIN", "AL DHAFRA"];
-const typePlaceResidence = ["Villa", "Flat", "Hotel", "Camp"];
+const region = ["Bur Dubai", "Deira", "Jumeirah"];
+const typePlaceResidence = ["Villa", "Apartment", "Hotel"];
 const gender = ['male', 'female'];
 const ageMapping = {
     1: '0-14',
@@ -8,10 +8,11 @@ const ageMapping = {
     3: '20-24',
     4: '25-29',
 }
-const nationalityData = ["AFGHANISTAN", "ALAND ISLANDS", "ALBANIA", "ALGERIA"]
+const nationalityData = ['UAE', 'India', 'Pakistan', 'Egypt']
 const residencyStatusData = ["UAE CITIZEN", "RESIDENT EXPATRIATES", "VISITOR"]
 const performingFacility = ["CSKB UOS Hall COVID Vaccination", "CJMZ MUZAIRA", "MEDEOR 24 7 HOSPITAL", "MKU Al Kuwaiti"]
-const occupations = ["DRIVING INSTRUCTOR", "Administration", "Airline", "Beauty Salons (Men / Women)"]
+const occupations = ["Procurement officer"," IT Manager"," HR Manager", "Doctor"]
+    
 //ned to update building name of patiend address
 const patientAddressBuildingMapping = {
     "Hotel Tulip": { lat: 25.2554478, lng: 55.2984144 },
@@ -23,7 +24,7 @@ const patientAddressBuildingMapping = {
 //har coded data
 const patientAddressBuildings = ["Hotel Tulip", "Al Khoory Hotel Apartments", "Saffron Hotel", "Garden Homes Frond O"]
 const flatsNumber = ["701", "505", "103", "A-15"]
-const area = ["Al Mankhool", "Al Barsha", "Al Muraqqabat, Deira", "Palm Jumeirah"]
+const area = ["Bur Dubai", "Deira", "Jumeirah", "Palm Jumeirah"]
 const streetNumbers = ["3A Street", "1 Al Barsha 1 Street", "34c Street", "Al Safawi - Frond O Street", "Wadi Al Safa 6 Street"]
 
 
@@ -37,11 +38,13 @@ const schoolCoordinates = {
     "Nord Anglia International School": { lat: 25.0618708, lng: 55.2266874 },
     "Gems Metropole School": { lat: 25.0333053, lng: 55.2815025 },
 }
+const zonesMapping = {
+    "Bur Dubai": "Zone 5", 
+    "Deira":  "Zone 6", 
+    "Jumeirah":  "Zone 2", 
+}
 const zones = ["zone 1", "zone 2", "zone 3", "zone 4", "zone 5", "zone 6", "zone 7"]
-const schoolArea = ["Al Qusais", "Al Warqa", "Al Barsha South", "DAMAC Hills"]
-const schoolStreets = ["21 A Street", "12 C Street"
-    ,"Nord Anglia International School Access Road", "Damac Hills"]
-const employersName = ["Etisalat", "Microsoft", "TechVista ltd", "TechManindra ltd"]
+const employersName = ["Dubai Health Authority", "Microsoft", "Techvista Systems"]
 const placesOfWork = ["Al Kifaf building", "Microsoft Dubai office Building", "The Exchange Tower Building", "Latifa Tower Building"]
 const occupationArea = ["Zabeel", "Dubai Knowledge Park", "Business Bay", "World Trade Centre"]
 const occuapationStreet = ["Sheikh Zayed Road (south)", "Sheikh Zayed Road (south)", "Business Bay", "Sheikh Zayed Road (south)"]
@@ -60,6 +63,9 @@ function getRandomValue(array) {
 
 function patientEntry(requestBody) {
 
+    let patientAddressRegion = getRandomValue(region);
+    let schoolAddressRegion = getRandomValue(region);
+    let occupationRegion = getRandomValue(region);
     let patientData = {
         fullname: faker.name.fullName(),
         gender: getRandomValue(gender),
@@ -69,8 +75,8 @@ function patientEntry(requestBody) {
         residencyStatus: getRandomValue(residencyStatusData),
         patientAddress: {
             emirate: "Dubai",
-            region: getRandomValue(region),
-            zone: getRandomValue(zones),
+            region: patientAddressRegion,
+            zone: zonesMapping[patientAddressRegion],
             typeOfResidence: getRandomValue(typePlaceResidence),
             buildingName: null,
             flatNumber: getRandomValue(flatsNumber),
@@ -82,17 +88,12 @@ function patientEntry(requestBody) {
         school: {
             instituteType: getRandomValue(schoolInsitute),
             schoolName: null,
-            classNumber: faker.random.numeric(),
-            classSection: faker.random.alpha(),
+            classNumber: Math.floor(Math.random() * (4 - 1 + 1) + 1),
+            classSection: String.fromCharCode(65+Math.floor(Math.random() * 3)),
             // Institute Address
             emirate: "Dubai",
-            region: getRandomValue(region),
-            zone: getRandomValue(zones),
-            //school building and flatnumber
-            buildingName: "someDataAsPerDataType",
-            flatNumber: "someDataAsPerDataType",
-            area: getRandomValue(schoolArea),
-            streetNumber: getRandomValue(schoolStreets),
+            region: schoolAddressRegion,
+            zone: zonesMapping[schoolAddressRegion],
             latitude: null,
             longitude: null
         },
@@ -102,12 +103,9 @@ function patientEntry(requestBody) {
             placeOfWork: null,
             // Employer Address
             emirate: "Dubai",
-            region: getRandomValue(region),
-            zone: getRandomValue(zones),
-            buildingName: "someDataAsPerDataType",
-            flatNumber: "someDataAsPerDataType",
+            region: occupationRegion,
+            zone: zonesMapping[occupationRegion],
             area: getRandomValue(occupationArea),
-            streetNumber: getRandomValue(occuapationStreet),
             latitude: null,
             longitude: null
         },
