@@ -11,8 +11,8 @@ const ageMapping = {
 const nationalityData = ['UAE', 'India', 'Pakistan', 'Egypt']
 const residencyStatusData = ["UAE CITIZEN", "RESIDENT EXPATRIATES", "VISITOR"]
 const performingFacility = ["CSKB UOS Hall COVID Vaccination", "CJMZ MUZAIRA", "MEDEOR 24 7 HOSPITAL", "MKU Al Kuwaiti"]
-const occupations = ["Procurement officer"," IT Manager"," HR Manager", "Doctor"]
-    
+const occupations = ["Procurement officer", " IT Manager", " HR Manager", "Doctor"]
+
 //ned to update building name of patiend address
 const patientAddressBuildingMapping = {
     "Hotel Tulip": { lat: 25.2554478, lng: 55.2984144 },
@@ -39,9 +39,9 @@ const schoolCoordinates = {
     "Gems Metropole School": { lat: 25.0333053, lng: 55.2815025 },
 }
 const zonesMapping = {
-    "Bur Dubai": "Zone 5", 
-    "Deira":  "Zone 6", 
-    "Jumeirah":  "Zone 2", 
+    "Bur Dubai": "Zone 5",
+    "Deira": "Zone 6",
+    "Jumeirah": "Zone 2",
 }
 const zones = ["zone 1", "zone 2", "zone 3", "zone 4", "zone 5", "zone 6", "zone 7"]
 const employersName = ["Dubai Health Authority", "Microsoft", "Techvista Systems"]
@@ -89,7 +89,7 @@ function patientEntry(requestBody) {
             instituteType: getRandomValue(schoolInsitute),
             schoolName: null,
             classNumber: Math.floor(Math.random() * (4 - 1 + 1) + 1),
-            classSection: String.fromCharCode(65+Math.floor(Math.random() * 3)),
+            classSection: String.fromCharCode(65 + Math.floor(Math.random() * 4)),
             // Institute Address
             emirate: "Dubai",
             region: schoolAddressRegion,
