@@ -43,11 +43,9 @@ const zonesMapping = {
     "Deira": "Zone 6",
     "Jumeirah": "Zone 2",
 }
-const zones = ["zone 1", "zone 2", "zone 3", "zone 4", "zone 5", "zone 6", "zone 7"]
 const employersName = ["Dubai Health Authority", "Microsoft", "Techvista Systems"]
 const placesOfWork = ["Al Kifaf building", "Microsoft Dubai office Building", "The Exchange Tower Building", "Latifa Tower Building"]
 const occupationArea = ["Zabeel", "Dubai Knowledge Park", "Business Bay", "World Trade Centre"]
-const occuapationStreet = ["Sheikh Zayed Road (south)", "Sheikh Zayed Road (south)", "Business Bay", "Sheikh Zayed Road (south)"]
 const placeOfWorkCoordinates = {
     "Al Kifaf building": { lat: 25.2311037, lng: 55.29137 },
     "Microsoft Dubai office Building": { lat: 25.0948373, lng: 55.1625756 },
