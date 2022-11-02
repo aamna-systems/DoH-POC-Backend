@@ -1,4 +1,4 @@
-const { patientEntry } = require('../helpers/dataMapHelper');
+const { patientEntry, getEmailQuery } = require('../helpers/dataMapHelper');
 const Patient = require('../models/newPatient')
 
 
@@ -9,18 +9,29 @@ const createPatients = (async (req, res) => {
         });
     } else {
         try {
-            let results = []
-            const numberOfRecords = req.body.noOfCases;
-            for (let i = 0; i < numberOfRecords; i++) {
-                const entry = patientEntry(req.body)
-                results.push(entry)
-            }
-            console.log('results', results)
-            await Patient.insertMany(results)
-            res.status(201).json({
+            // let results = []
+            // const numberOfRecords = req.body.noOfCases;
+            // for (let i = 0; i < numberOfRecords; i++) {
+            //     const entry = patientEntry(req.body)
+            //     results.push(entry)
+            // }
+            // console.log('results', results)
+            // await Patient.insertMany(results)
+
+
+            getEmailQuery();
+
+            res.status(201).send({
                 message:
                     "Successfully created data!",
-            });
+
+            })
+            // console.log('r', r)
+            // res.status(201).send({
+            //     message:
+            //         "Successfully created data!",
+            //         r
+            // });
         } catch (err) {
             console.log(err)
             res.status(500).send(

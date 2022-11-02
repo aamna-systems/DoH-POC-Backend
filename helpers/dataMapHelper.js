@@ -1,4 +1,5 @@
 const { faker } = require('@faker-js/faker');
+const newPatient = require('../models/newPatient');
 const region = ["Bur Dubai", "Deira", "Jumeirah"];
 const typePlaceResidence = ["Villa", "Apartment", "Hotel"];
 const gender = ['male', 'female'];
@@ -226,4 +227,44 @@ function patientEntry(requestBody) {
     return patientData
 }
 
+
+const getEmailQuery = (() => {
+
+    let testSchool = ['Gems Metropole School']
+    testSchool.map( async (element) => {
+        let results =  await newPatient.aggregate([
+            {
+                $match: {"school.schoolName" : element}
+            },
+            {
+              $group: {
+                _id: {
+                  key: "$school.classNumber",
+                  value: "$school.classSection"
+                },
+                count: {
+                  $sum: 1
+                }
+              }
+            },
+            {
+              $group: {
+                _id: "$_id.key",
+                result: {
+                  $push: {
+                    value: "$$ROOT._id.value",
+                    count: "$$ROOT.count"
+                  }
+                }
+              }
+            }
+          ])
+        console.log('results', JSON.stringify(results))
+    });
+})
+
+
+
+
 exports.patientEntry = patientEntry
+exports.getEmailQuery = getEmailQuery
