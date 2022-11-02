@@ -233,11 +233,8 @@ function patientEntry(requestBody) {
 
 const getEmailQuery = (() => {
 
-
     var d = new Date();
     d.setMinutes(d.getMinutes() - 2);
-
-
 
     let testSchool = ['Gems Metropole School']
     testSchool.map(async (element) => {
@@ -246,7 +243,7 @@ const getEmailQuery = (() => {
                 $match: {
                     "school.schoolName": element,
                     createdAt: {
-                        $lte: d
+                        $gte: d
                     }
                 }
 
