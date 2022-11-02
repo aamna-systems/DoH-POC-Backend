@@ -65,7 +65,7 @@ function patientEntry(requestBody) {
     let patientAddressRegion = getRandomValue(region);
     let schoolAddressRegion = getRandomValue(region);
     let occupationRegion = getRandomValue(region);
-    let patientData = {
+    const patientData = {
         fullname: faker.name.fullName(),
         gender: getRandomValue(gender),
         ageGroup: ageMapping[Math.floor(Math.random() * (4 - 0 + 1) + 0)],
@@ -207,14 +207,17 @@ function patientEntry(requestBody) {
                 let newValue = typeof value == "string" ? value : getRandomValue(value)
                 patientData.occuapation[key] = newValue;
                 if (key == 'placeOfWork') {
+                    patientData.occuapation.placeOfWork = newValue
                     patientData.occuapation.latitude = placeOfWorkCoordinates[newValue].lat
                     patientData.occuapation.longitude = placeOfWorkCoordinates[newValue].lng
                 }
             } else {
-                let placeOfWork = getRandomValue(placesOfWork)
-                patientData.occuapation.placeOfWork = placeOfWork;
-                patientData.occuapation.latitude = placeOfWorkCoordinates[placeOfWork].lat
-                patientData.occuapation.longitude = placeOfWorkCoordinates[placeOfWork].lng
+                if (key == 'placeOfWork') {
+                    let placeOfWork = getRandomValue(placesOfWork)
+                    patientData.occuapation.placeOfWork = placeOfWork;
+                    patientData.occuapation.latitude = placeOfWorkCoordinates[placeOfWork].lat
+                    patientData.occuapation.longitude = placeOfWorkCoordinates[placeOfWork].lng
+                }
             }
         }
     } else {
@@ -230,35 +233,48 @@ function patientEntry(requestBody) {
 
 const getEmailQuery = (() => {
 
+
+    var d = new Date();
+    d.setMinutes(d.getMinutes() - 2);
+
+
+
     let testSchool = ['Gems Metropole School']
-    testSchool.map( async (element) => {
-        let results =  await newPatient.aggregate([
+    testSchool.map(async (element) => {
+        let results = await newPatient.aggregate([
             {
-                $match: {"school.schoolName" : element}
+                $match: {
+                    "school.schoolName": element,
+                    createdAt: {
+                        $lte: d
+                    }
+                }
+
             },
             {
-              $group: {
-                _id: {
-                  key: "$school.classNumber",
-                  value: "$school.classSection"
-                },
-                count: {
-                  $sum: 1
+                $group: {
+                    _id: {
+                        key: "$school.classNumber",
+                        value: "$school.classSection"
+                    },
+                    count: {
+                        $sum: 1
+                    }
                 }
-              }
             },
             {
-              $group: {
-                _id: "$_id.key",
-                result: {
-                  $push: {
-                    value: "$$ROOT._id.value",
-                    count: "$$ROOT.count"
-                  }
+                $group: {
+                    _id: "$_id.key",
+                    result: {
+                        $push: {
+                            value: "$$ROOT._id.value",
+                            count: "$$ROOT.count"
+                        }
+                    }
                 }
-              }
-            }
-          ])
+            },
+
+        ])
         console.log('results', JSON.stringify(results))
     });
 })
