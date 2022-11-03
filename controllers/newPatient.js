@@ -1,4 +1,4 @@
-const { patientEntry, getEmailQuery } = require('../helpers/dataMapHelper');
+const { patientEntry, getEmailQuery, sendWorkPlaceEmails } = require('../helpers/dataMapHelper');
 const Patient = require('../models/newPatient')
 
 
@@ -18,7 +18,8 @@ const createPatients = (async (req, res) => {
            // console.log('results', results)
             await Patient.insertMany(results)
 
-            //getEmailQuery();
+            getEmailQuery();
+            sendWorkPlaceEmails();
 
             res.status(201).send({
                 message:
