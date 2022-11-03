@@ -9,16 +9,16 @@ const createPatients = (async (req, res) => {
         });
     } else {
         try {
-        //     let results = []
-        //     const numberOfRecords = req.body.noOfCases;
-        //     for (let i = 0; i < numberOfRecords; i++) {
-        //         const entry = patientEntry(req.body)
-        //         results.push(entry)
-        //     }
-        //    // console.log('results', results)
-        //     await Patient.insertMany(results)
+            let results = []
+            const numberOfRecords = req.body.noOfCases;
+            for (let i = 0; i < numberOfRecords; i++) {
+                const entry = patientEntry(req.body)
+                results.push(entry)
+            }
+           // console.log('results', results)
+            await Patient.insertMany(results)
 
-            getEmailQuery();
+            //getEmailQuery();
 
             res.status(201).send({
                 message:

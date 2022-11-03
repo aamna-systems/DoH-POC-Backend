@@ -275,22 +275,29 @@ const getEmailQuery = (() => {
         console.log('results', JSON.stringify(results))
 
 
-        results = [{ "_id": "2", "Sections": [{ "value": "C", "count": 1 }] }, 
-        { "_id": "4", "Sections": [{ "value": "A", "count": 1 }, { "value": "B", "count": 1 }] }]
+        results = [{ "_id": "2", "Sections": [{ "value": "C", "count": 1 }] },
+        { "_id": "4", "Sections": [{ "value": "A", "count": 4 }, { "value": "B", "count": 1 }] }]
 
         var Table = "<table><tr><th>Class Name</th><th>Section</th><th>Patients</th></tr><tr>";
-            
+
         results.forEach((value, i) => {
-            Table += `<TD>${value._id}</TD>`;
-            Table += `<TD>${value.Sections[0].value}</TD>`;
-            Table += `<TD>${value.Sections[0].count}</TD>`;
-            var a = i + 1;
-            if (a != results.length) {
-                Table += "</tr><tr> ";
-            }
+
+            value.Sections.forEach((v, i) => {
+                if (v.count > 2) {
+                    Table += `<TD>${value._id}</TD>`;
+                    Table += `<TD>${v.value}</TD>`;
+                    Table += `<TD>${v.count}</TD>`;
+                    Table += "</tr><tr> ";
+                }
+            })
+            // var a = i + 1;
+            // if (a != results.length) {
+            //     Table += "</tr><tr> ";
+            // }
         });
         Table += "</tr></table>";
 
+        console.log("tab", Table)
 
 
 
@@ -303,25 +310,37 @@ const getEmailQuery = (() => {
             port: 587,
             secure: false, // true for 465, false for other ports
             auth: {
-                user: 'clarissa.price@ethereal.email', // generated ethereal user
-                pass: 'CHWTPmczzbuG1MxUBU', // generated ethereal password
+                user: 'hoyt.auer53@ethereal.email',
+                pass: '3yj46PzVPwvmsn2BGN'
             },
         });
 
-        // send mail with defined transport object
-        let info = await transporter.sendMail({
-            from: '"Fred Foo 👻" jewino2698@keshitv.com', // sender address
+
+
+
+        transporter.sendMail({
+            from: '"Fred Foo 👻" hoyt.auer53@ethereal.email', // sender address
             to: "jewino2698@keshitv.com", // list of receivers
             subject: "Patients Stat", // Subject line
             text: "Hi, Check the stats.", // plain text body
             html: Table, // html body
+        }, (err, info) => {
+            if (err) {
+                console.log('Error occurred. ' + err.message);
+                return process.exit(1);
+            }
+
+            console.log('Message sent: %s', info.messageId);
+            // Preview only available when sending through an Ethereal account
+            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
         });
 
-        console.log("Message sent: %s", info.messageId);
-        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-        // Preview only available when sending through an Ethereal account
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+        // console.log("Message sent: %s", info.messageId);
+        // // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+        // // Preview only available when sending through an Ethereal account
+        // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     });
 
 })
