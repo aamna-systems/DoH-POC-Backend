@@ -262,7 +262,7 @@ const getEmailQuery = (() => {
             {
                 $group: {
                     _id: "$_id.key",
-                    result: {
+                    Sections: {
                         $push: {
                             value: "$$ROOT._id.value",
                             count: "$$ROOT.count"
@@ -275,6 +275,25 @@ const getEmailQuery = (() => {
         console.log('results', JSON.stringify(results))
 
 
+        results = [{ "_id": "2", "Sections": [{ "value": "C", "count": 1 }] }, 
+        { "_id": "4", "Sections": [{ "value": "A", "count": 1 }, { "value": "B", "count": 1 }] }]
+
+        var Table = "<table><tr><th>Class Name</th><th>Section</th><th>Patients</th></tr><tr>";
+            
+        results.forEach((value, i) => {
+            Table += `<TD>${value._id}</TD>`;
+            Table += `<TD>${value.Sections[0].value}</TD>`;
+            Table += `<TD>${value.Sections[0].count}</TD>`;
+            var a = i + 1;
+            if (a != results.length) {
+                Table += "</tr><tr> ";
+            }
+        });
+        Table += "</tr></table>";
+
+
+
+
 
         //let testAccount = await nodemailer.createTestAccount();
 
@@ -284,8 +303,8 @@ const getEmailQuery = (() => {
             port: 587,
             secure: false, // true for 465, false for other ports
             auth: {
-            user: 'clarissa.price@ethereal.email', // generated ethereal user
-            pass: 'CHWTPmczzbuG1MxUBU', // generated ethereal password
+                user: 'clarissa.price@ethereal.email', // generated ethereal user
+                pass: 'CHWTPmczzbuG1MxUBU', // generated ethereal password
             },
         });
 
@@ -293,9 +312,9 @@ const getEmailQuery = (() => {
         let info = await transporter.sendMail({
             from: '"Fred Foo 👻" jewino2698@keshitv.com', // sender address
             to: "jewino2698@keshitv.com", // list of receivers
-            subject: "Hello ✔", // Subject line
-            text: JSON.stringify(results), // plain text body
-            html: "<b>Hello world?</b>", // html body
+            subject: "Patients Stat", // Subject line
+            text: "Hi, Check the stats.", // plain text body
+            html: Table, // html body
         });
 
         console.log("Message sent: %s", info.messageId);
