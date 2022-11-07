@@ -241,8 +241,8 @@ const getEmailQuery = (() => {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: 'hoyt.auer53@ethereal.email',
-            pass: '3yj46PzVPwvmsn2BGN'
+            user: 'wilfredo.auer@ethereal.email',
+            pass: 'fK7eP8XJjjmcFrh8vt'
         },
     });
 
@@ -338,8 +338,8 @@ const sendWorkPlaceEmails = (() => {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: 'hoyt.auer53@ethereal.email',
-            pass: '3yj46PzVPwvmsn2BGN'
+            user: 'wilfredo.auer@ethereal.email',
+            pass: 'fK7eP8XJjjmcFrh8vt'
         },
     });
 
