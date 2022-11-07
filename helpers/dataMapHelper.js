@@ -1,7 +1,9 @@
 const { faker } = require('@faker-js/faker');
 const newPatient = require('../models/newPatient');
 const nodemailer = require("nodemailer");
+const sendGridTransporter = require('nodemailer-sendgrid-transport')
 const { json } = require('body-parser');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
 const region = ["Bur Dubai", "Deira", "Jumeirah"];
 const typePlaceResidence = ["Villa", "Apartment", "Hotel"];
 const gender = ['male', 'female'];
@@ -233,19 +235,16 @@ function patientEntry(requestBody) {
 }
 
 
+const transporter = nodemailer.createTransport(sendgridTransport({
+
+    auth:{
+        api_key: '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'
+    }
+
+}));
+
+
 const getEmailQuery = (() => {
-
-    // create reusable transporter object using the default SMTP transport
-    let transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-            user: 'wilfredo.auer@ethereal.email',
-            pass: 'fK7eP8XJjjmcFrh8vt'
-        },
-    });
-
 
     var d = new Date();
     d.setMinutes(d.getMinutes() - 2);
@@ -312,7 +311,7 @@ const getEmailQuery = (() => {
 
         if (flag) {
             transporter.sendMail({
-                from: '"Fred Foo 👻" hoyt.auer53@ethereal.email', // sender address
+                from: "taliha.arif@systemsltd.com", // sender address
                 to: "jewino2698@keshitv.com", // list of receivers
                 subject: element, // Subject line
                 text: "Hi, Check the stats.", // plain text body
@@ -322,27 +321,12 @@ const getEmailQuery = (() => {
                     console.log('Error occurred. ' + err.message);
                     return process.exit(1);
                 }
-
-                console.log('Message sent: %s', info.messageId);
-                // Preview only available when sending through an Ethereal account
-                console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+                
             });
         }
     });
 })
 const sendWorkPlaceEmails = (() => {
-
-    // create reusable transporter object using the default SMTP transport
-    let transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-            user: 'wilfredo.auer@ethereal.email',
-            pass: 'fK7eP8XJjjmcFrh8vt'
-        },
-    });
-
 
     var d = new Date();
     d.setMinutes(d.getMinutes() - 2);
@@ -391,7 +375,7 @@ const sendWorkPlaceEmails = (() => {
 
         if (flag) {
             transporter.sendMail({
-                from: '"Fred Foo 👻" hoyt.auer53@ethereal.email', // sender address
+                from: "taliha.arif@systemsltd.com", // sender address
                 to: "jewino2698@keshitv.com", // list of receivers
                 subject: element, // Subject line
                 text: "Hi, Check the stats.", // plain text body
@@ -401,10 +385,6 @@ const sendWorkPlaceEmails = (() => {
                     console.log('Error occurred. ' + err.message);
                     return process.exit(1);
                 }
-
-                console.log('Message sent: %s', info.messageId);
-                // Preview only available when sending through an Ethereal account
-                console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
             });
         }
     });
