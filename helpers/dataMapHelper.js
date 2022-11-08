@@ -312,7 +312,7 @@ const getEmailQuery = (() => {
         if (flag) {
             transporter.sendMail({
                 from: "taliha.arif@systemsltd.com", // sender address
-                to: "jewino2698@keshitv.com", // list of receivers
+                to: "hejipa8424@keshitv.com", // list of receivers
                 subject: element, // Subject line
                 text: "Hi, Check the stats.", // plain text body
                 html: Table, // html body
@@ -353,7 +353,7 @@ const sendWorkPlaceEmails = (() => {
 
         console.log('results', JSON.stringify(results))
 
-        var Table = "<table><tr><th>Place of Work</th><th>Patients</th></tr><tr>";
+        var Table = "<table><tr><th>Place of Work  </th><th>Patients</th></tr><tr>";
         let flag = false
 
         results.forEach((value, i) => {
@@ -376,7 +376,7 @@ const sendWorkPlaceEmails = (() => {
         if (flag) {
             transporter.sendMail({
                 from: "taliha.arif@systemsltd.com", // sender address
-                to: "jewino2698@keshitv.com", // list of receivers
+                to: "hejipa8424@keshitv.com", // list of receivers
                 subject: element, // Subject line
                 text: "Hi, Check the stats.", // plain text body
                 html: Table, // html body
