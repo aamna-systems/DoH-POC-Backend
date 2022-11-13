@@ -1,9 +1,13 @@
 const { faker } = require('@faker-js/faker');
 const newPatient = require('../models/newPatient');
 const nodemailer = require("nodemailer");
-const sendGridTransporter = require('nodemailer-sendgrid-transport')
 const { json } = require('body-parser');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
+const dotenv = require('dotenv');
+dotenv.config();
+
+
+
 const region = ["Bur Dubai", "Deira", "Jumeirah"];
 const typePlaceResidence = ["Villa", "Apartment", "Hotel"];
 const gender = ['male', 'female'];
@@ -238,7 +242,7 @@ function patientEntry(requestBody) {
 const transporter = nodemailer.createTransport(sendgridTransport({
 
     auth:{
-        api_key: ''
+        api_key: process.env.sendGrid_Key
     }
 
 }));
@@ -312,7 +316,7 @@ const getEmailQuery = (() => {
         if (flag) {
             transporter.sendMail({
                 from: "taliha.arif@systemsltd.com", // sender address
-                to: "hejipa8424@keshitv.com", // list of receivers
+                to: "cipis92787@sopulit.com", // list of receivers
                 subject: element, // Subject line
                 text: "Hi, Check the stats.", // plain text body
                 html: Table, // html body
@@ -321,6 +325,7 @@ const getEmailQuery = (() => {
                     console.log('Error occurred. ' + err.message);
                     return process.exit(1);
                 }
+                console.log('info', info)
                 
             });
         }
@@ -376,7 +381,7 @@ const sendWorkPlaceEmails = (() => {
         if (flag) {
             transporter.sendMail({
                 from: "taliha.arif@systemsltd.com", // sender address
-                to: "hejipa8424@keshitv.com", // list of receivers
+                to: "cipis92787@sopulit.com", // list of receivers
                 subject: element, // Subject line
                 text: "Hi, Check the stats.", // plain text body
                 html: Table, // html body
@@ -385,6 +390,7 @@ const sendWorkPlaceEmails = (() => {
                     console.log('Error occurred. ' + err.message);
                     return process.exit(1);
                 }
+                console.log('info', info)
             });
         }
     });
