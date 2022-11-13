@@ -238,7 +238,7 @@ function patientEntry(requestBody) {
 const transporter = nodemailer.createTransport(sendgridTransport({
 
     auth:{
-        api_key: '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'
+        api_key: ''
     }
 
 }));
